@@ -17,9 +17,17 @@ class App extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     let arr = this.state.tasks;
-    arr.push(this.state.taskValue);
-
-    this.setState({ tasks: arr });
+    if(arr.includes(this.state.taskValue)){
+      alert("The task is already exist.");
+    }else{
+      if(this.state.taskValue != ""){
+        arr.push(this.state.taskValue);
+        this.setState({ tasks: arr });
+      }else{
+        alert("The task is empty.");
+      }
+    }
+    
 
     const newTask = this.state.tasks;
     const getTasksFromLocalSt = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -27,6 +35,7 @@ class App extends React.Component {
       "tasks",
       JSON.stringify([...getTasksFromLocalSt, newTask])
     );
+    
   };
 
   deleteItem = (i) => {
